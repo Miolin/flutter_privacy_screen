@@ -14,11 +14,13 @@ class FlutterPrivacyScreenPlugin(private val context: Activity): MethodCallHandl
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      if (null == registrar.activity()) {
+      val activity = registrar.activity()
+      if (null == activity) {
         return;
+      } else {
+        val channel = MethodChannel(registrar.messenger(), "flutter_privacy_screen")
+        channel.setMethodCallHandler(FlutterPrivacyScreenPlugin(activity))
       }
-      val channel = MethodChannel(registrar.messenger(), "flutter_privacy_screen")
-      channel.setMethodCallHandler(FlutterPrivacyScreenPlugin(registrar.activity()))
     }
   }
 
